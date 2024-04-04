@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Password Manager</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+
+    form {
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      width: 300px;
+    }
+
+    h1, h2 {
+      text-align: center;
+      color: #333;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      color: #555;
+    }
+
+    input {
+      width: calc(100% - 30px);
+      padding: 8px;
+      margin-bottom: 16px;
+      box-sizing: border-box;
+    }
+
+    .password-container {
+      position: relative;
+    }
+
+    .password-toggle {
+      position: absolute;
+      top: 57%;
+      transform: translateY(-50%);
+      cursor: pointer;
+      padding: 0 -30px;
+      background: none;
+      border: none;
+    }
+
+    .eye-icon {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      cursor: pointer;
+    }
+
+    button {
+      background-color: #4caf50;
+      color: #fff;
+      padding: 10px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      width: 100%;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .password-box {
+      background-color: #e0e0e0;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      padding: 10px;
+      margin-bottom: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .password-actions {
+      display: flex;
+      gap: 8px;
+    }
+
+    .remove-button {
+      background-color: #ff5252;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      padding: 4px;
+    }
+
+    .remove-button:hover {
+      background-color: #d32f2f;
+    }
+  </style>
+</head>
+<body>
+
+  <form id="passwordForm">
+    <h1>Password Manager</h1>
+    <label for="website">Website:</label>
+    <input type="text" id="website" required>
+    
+    <label for="username">Username:</label>
+    <input type="text" id="username" required>
+    
+    <label for="password">Password:</label>
+    <div class="password-container">
+      <input type="password" id="password" required>
+      
+    </div>
+    
+    <button type="button" onclick="savePassword()">Save Password</button>
+  </form>
+
+  <div id="passwordList">
+    <h2>Saved Passwords</h2>
+    <ul id="passwords"></ul>
+  </div>
+
+  <script>
+    function savePassword() {
+      const website = document.getElementById("website").value;
+      const username = document.getElementById("username").value;
+      const password = document.getElementById("password").value;
+
+      if (website && username && password) {
+        const entry = { website, username, password };
+        const passwords = JSON.parse(localStorage.getItem("passwords")) || [];
+        passwords.push(entry);
+        localStorage.setItem("passwords", JSON.stringify(passwords));
+
+        displayPasswords();
+      } else {
+        alert("Please fill in all fields");
+      }
+    }
+
+    function removePassword(index) {
+      const passwords = JSON.parse(localStorage.getItem("passwords")) || [];
+      passwords.splice(index, 1);
+      localStorage.setItem("passwords", JSON.stringify(passwords));
+      displayPasswords();
+    }
+
+    function displayPasswords() {
+      const passwords = JSON.parse(localStorage.getItem("passwords")) || [];
+      const passwordsList = document.getElementById("passwords");
+      passwordsList.innerHTML = "";
+
+      passwords.forEach((entry, index) => {
+        const listItem = document.createElement("li");
+        listItem.innerHTML = `
+        <div class="password-box">
+                <div>
+                    <strong>Website:</strong> ${entry.website}<br>
+                    <strong>Username:</strong> ${entry.username}<br>
+                    <strong>Password:</strong> 
+                    <span id="password-${index}" class="password-masked">*********</span>
+                    <span id="real-password-${index}" class="password-real" style="display: none;">${entry.password}</span>
+                </div>
+                <div class="password-actions">
+                    <div class="password-toggle" onclick="togglePasswordVisibility(${index})">👁️</div>
+                    <button class="remove-button" onclick="removePassword(${index})">X</button>
+                </div>
+            </div>
+        `;
+        passwordsList.appendChild(listItem);
+      });
+    }
+
+    function togglePasswordVisibility(index) {
+    const passwordMasked = document.getElementById(`password-${index}`);
+    const passwordReal = document.getElementById(`real-password-${index}`);
+
+    if (passwordMasked.style.display !== 'none') {
+        passwordMasked.style.display = 'none';
+        passwordReal.style.display = 'inline';
+    } else {
+        passwordMasked.style.display = 'inline';
+        passwordReal.style.display = 'none';
+    }
+}
+
+
+    // Display existing passwords on page load
+    displayPasswords();
+  </script>
+
+</body>
+</html>
