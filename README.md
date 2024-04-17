@@ -1,8 +1,21 @@
-# Guardiankey
-GuardianKey is a dedicated password manager designed specifically for UNI. It offers a seamless blend of security and convenience, ensuring your passwords are always safe and accessible.
+# SecureVault Password Manager
 
-# Core Features 
-* Universal Compatibility: GuardianKey is designed to work flawlessly across all devices, providing you with access to your passwords whenever and wherever you need them.
-* Secure Encryption: Your passwords are stored with robust encryption algorithms. This means that even if someone were to gain unauthorized access, they wouldn’t be able to decipher your passwords.
-* Modern Design: With its stylish and intuitive user interface, GuardianKey makes password management a breeze. You’ll enjoy every moment you spend with the app.
-* Easy Management: GuardianKey allows you to organize your passwords with customizable titles, making it easy to recall and manage them. Say goodbye to the hassle of forgotten passwords!
+## Introduction
+SecureVault is a password manager designed to provide a secure and user-friendly way to manage your passwords. With SecureVault, you can store, generate, and retrieve passwords for all your online accounts, ensuring that your information stays safe and accessible.
+
+## Features
+- **Secure Storage**: Your passwords are encrypted and stored securely.
+- **Cross-Platform Syncing**: Access your passwords across all your devices.
+- **User-Friendly Interface**: Manage your passwords with an intuitive interface.
+
+## Getting Started
+To get started with SecureVault, clone this repository and follow the installation instructions below.
+
+### Prerequisites
+- A modern web browser.
+- Basic knowledge of HTML, CSS, and JavaScript.
+
+### Installation
+1. Clone the repository:
+   ```sh
+   git clone https://github.com/coolyer/Guardiankey.git
